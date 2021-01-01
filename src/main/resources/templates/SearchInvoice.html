@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="ISO-8859-1">
+<title>DeRetail - Search Invoice</title>
+<link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<h1>Search Invoice</h1>
+<table>
+	<tr>
+		<th>Bill#</th><th>Seller</th><th>item#</th><th>item descr</th><th>quantity</th><th>u.price</th><th>total price</th>
+	</tr>
+	<tr th:each = "(s : ${sell.sellDetails})">
+		<td th:text = "${sell.drshBillNo}">BillNo</td>
+		<td th:text = "${sell.drshSeller}">Seller</td>
+		<td th:text = "${s.drsdProductCode}">Product code</td>
+		<td th:text = "${s.drshBillNo}">Item Descr</td>
+		<td th:text = "${s.drsdQuantity}">Quantity</td>
+		<td th:text = "${s.drsdUnitPrice}">Unit Price</td>
+		<td th:text = "${s.drsdTotalPrice}">Total Price</td>
+	</tr>
+</table>
+</body>
+</html>
