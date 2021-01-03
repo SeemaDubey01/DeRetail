@@ -1,5 +1,7 @@
 package com.deretail.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,28 +28,59 @@ public class BillingController {
 		return "BillingHome";
 	}
 	@GetMapping("/NewBilling")
-	public String newBilling() {
+	public String newBilling(Model model) {
+		model.addAttribute("header", new DeRetailSellHeader() );
 		return "NewBilling";
 	}
 	@PostMapping("/NewBilling")
 	public String postNewBilling(Model model, DeRetailSellHeader header) {
+		int i=0; int amt=0;
+		for (DeRetailSellDetails s : header.getSellDetails()) {
+			s.setDrsdTotalPrice(s.getDrsdQuantity() * s.getDrsdUnitPrice());;
+			i++;
+			s.setDrsdItemNo(i);
+			s.setDrsdBillItem(header.getDrshBillNo()*10000 + i);
+			amt += s.getDrsdTotalPrice();
+			s.setDrshBillNo(header.getDrshBillNo());
+			System.out.println(s);
+		}
+		header.setDrshTotalItem(i);
+		header.setDrshTotalBill(amt);
 		System.out.println("new header :" + header);
+		sellHeaderRepo.save(header);
 		return "redirect:BillingHome";
 	}
-	
 	@GetMapping("/SearchInvoice")
-	public String searchInvoice(Model model) {
-		DeRetailSellHeader sellHeader;
-		sellHeader = sellHeaderRepo.getOne(1);
-		System.out.println("header: " + sellHeader);
-		int i;
-		for (i=0;i<4;i++) {
-			System.out.println("detail : " + sellHeader.getSellDetails().get(i));
+	public String searchInvoice(Model model, Integer drshBillNo) {
+		DeRetailSellHeader sell = new DeRetailSellHeader();
+		if (drshBillNo!= null ) {
+			Optional<DeRetailSellHeader> sellHeaderMap;
+			sellHeaderMap = sellHeaderRepo.findById(drshBillNo);
+			if(sellHeaderMap.isPresent()) {
+				sell = sellHeaderMap.get();
+			}
 		}
-		model.addAttribute("sell", sellHeader);
+		model.addAttribute("sell", sell);
 		return "SearchInvoice";
 	}
 	
+//	@GetMapping("/SearchInvoice/{sellMap}")
+//	public String searchInvoiceWithBill(Model model, @PathVariable("sellMap") DeRetailSellDetails sellMap) {
+//		System.out.println("inside search with bill no");
+//		
+//		System.out.println("header: " + sellHeader);
+//		for (DeRetailSellDetails s : sellHeader.getSellDetails()) {
+//			System.out.println("detail : " + s);
+//		}
+//		model.addAttribute("sell", sellHeader);
+//		return "SearchInvoice";
+//	}
+	
+//	@GetMapping("/SearchInvoice")
+//	public String searchInvoiceWithBill2(Model model, int drshBillNo) {
+//		System.out.println("search with int");
+//		return "SearchInvoice";
+//	}
 	@GetMapping("/FeedInvoice")
 	public String feedInvoice() {
 		DeRetailSellHeader sellHeader = new DeRetailSellHeader();

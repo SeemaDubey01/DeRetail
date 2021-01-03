@@ -8,7 +8,14 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home() {
-		System.out.println("inside home");
 		return "home";
+	}
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	@GetMapping("/UserHome")
+	public String userHome() {
+		return "UserHome";
 	}
 }
