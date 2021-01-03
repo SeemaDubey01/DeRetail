@@ -7,6 +7,11 @@
 </head>
 <body>
 <h1>Search Invoice</h1>
+<form th:action="@{SearchInvoice}" th:object="${sell}" method="GET">
+	<label>Invoice No: </label>
+	<input type="text" th:field="*{drshBillNo}"/>
+	<button type="submit">Submit</button>
+</form><p/>
 <table>
 	<tr>
 		<th>Bill#</th><th>Seller</th><th>item#</th><th>item descr</th><th>quantity</th><th>u.price</th><th>total price</th>
@@ -20,6 +25,7 @@
 		<td th:text = "${s.drsdUnitPrice}">Unit Price</td>
 		<td th:text = "${s.drsdTotalPrice}">Total Price</td>
 	</tr>
-</table>
+</table><br/>
+<a href="/">Home</a>
 </body>
 </html>

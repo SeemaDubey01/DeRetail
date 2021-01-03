@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head  xmlns:th="http://www.thymeleaf.org">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
 <h1>New Billing</h1>
-<form action="NewBilling" method="POST">
-<label>Invoice No</label>
-<input type="text" id=s.drshBillNo/><br/>
-<label>Seller</label>
-<input type="text" id=s.drshSeller/><br/>
-<button type="submit">Submit</button>
+<form th:action="@{NewBilling}" th:object="${header}" method="POST">
+	<label>Invoice No</label>
+	<input type="text" th:field="*{drshBillNo}"/><br/>
+	<label>Seller</label>
+	<input type="text" th:field="*{drshSeller}"/><br/>
+	<p/>
+	<label>Product Code</label>
+	<input type="text" th:field="*{sellDetails[0].drsdProductCode}"/><br/>
+	<label>Quantity</label>
+	<input type="text" th:field="*{sellDetails[0].drsdQuantity}"/><br/>
+	<label>Unit Price</label>
+	<input type="text" th:field="*{sellDetails[0].drsdUnitPrice}"/><br/>
+	<p/>
+	<label>Product Code</label>
+	<input type="text" th:field="*{sellDetails[1].drsdProductCode}"/><br/>
+	<label>Quantity</label>
+	<input type="text" th:field="*{sellDetails[1].drsdQuantity}"/><br/>
+	<label>Unit Price</label>
+	<input type="text" th:field="*{sellDetails[1].drsdUnitPrice}"/><br/>
+	
+	<button type="submit">Submit</button>
 </form>
 </body>
 </html>
