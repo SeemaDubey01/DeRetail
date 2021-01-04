@@ -14,8 +14,8 @@ public class DeRetailSellHeader {
 	@Id
 	private int drshBillNo;
 	private String drshSeller;
-	private long drshTotalItem;
-	private long drshTotalBill;
+	private int drshTotalItem;
+	private double drshTotalBill;
 	
 	
     @OneToMany(targetEntity=DeRetailSellDetails.class,cascade=CascadeType.ALL )
@@ -42,13 +42,13 @@ public class DeRetailSellHeader {
 	public long getDrshTotalItem() {
 		return drshTotalItem;
 	}
-	public void setDrshTotalItem(long drshTotalItem) {
+	public void setDrshTotalItem(int drshTotalItem) {
 		this.drshTotalItem = drshTotalItem;
 	}
-	public long getDrshTotalBill() {
+	public double getDrshTotalBill() {
 		return drshTotalBill;
 	}
-	public void setDrshTotalBill(long drshTotalBill) {
+	public void setDrshTotalBill(double drshTotalBill) {
 		this.drshTotalBill = drshTotalBill;
 	}
 	public List<DeRetailSellDetails> getSellDetails() {

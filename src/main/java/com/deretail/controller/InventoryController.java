@@ -14,7 +14,7 @@ import com.deretail.dto.DeRetailInventory;
 import com.deretail.repo.InventoryRepo;
 
 @Controller
-@RequestMapping("/InventoryHome")
+@RequestMapping("/Inventory")
 public class InventoryController {
 	@Autowired
 	InventoryRepo inventoryRepo;

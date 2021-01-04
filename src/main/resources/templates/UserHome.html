@@ -2,10 +2,33 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User home</title>
+<link href="/css/main.css" rel="stylesheet"/>
 </head>
 <body>
-<a href="Billing/BillingHome">Billing Home</a><br/>
-<a href="InventoryHome/">Inventory Home</a><br/>
+<div class="header-bg">
+        <img src="/images/grocery-icon.png" alt="icon" width="80px" />
+        <div>Vikas Super Mart</div>
+        <div class="header-button">
+            <a href="/UserHome"><img src="/images/home-button.png" alt="home"/></a>
+            <a href="/home"><img src="/images/logout.png" alt="logout"/></a>
+            
+        </div>
+</div>
+<div class="container">
+    <div class="home-nav-bar">
+        <div class="home-nav-bar-item"><a href="/UserHome">Dashboard</a></div>
+        <div class="home-nav-bar-item"><a href="/Billing/NewBilling">New Billing</a></div>
+        <div class="home-nav-bar-item"><a href="/Billing/SearchInvoice">Search Invoice</a></div>
+        <div class="home-nav-bar-item"><a href="/Inventory/">Purchase</a></div>
+    </div>
+    <div class="home-content-bar">
+        <div class="welcome-note">
+            Welcome Vikas
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

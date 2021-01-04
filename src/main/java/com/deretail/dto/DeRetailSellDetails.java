@@ -11,8 +11,8 @@ public class DeRetailSellDetails {
 	private int drsdItemNo;
 	private int drsdProductCode;
 	private int drsdQuantity;
-	private long drsdUnitPrice;
-	private long drsdTotalPrice;
+	private double drsdUnitPrice;
+	private double drsdTotalPrice;
 	
 	private int drshBillNo;
 
@@ -54,20 +54,20 @@ public class DeRetailSellDetails {
 		this.drsdQuantity = drsdQuantity;
 	}
 
-	public long getDrsdUnitPrice() {
+	public double getDrsdUnitPrice() {
 		return drsdUnitPrice;
 	}
 
-	public void setDrsdUnitPrice(long drsdUnitPrice) {
+	public void setDrsdUnitPrice(double drsdUnitPrice) {
 		this.drsdUnitPrice = drsdUnitPrice;
 	}
 
-	public long getDrsdTotalPrice() {
+	public double getDrsdTotalPrice() {
 		return drsdTotalPrice;
 	}
 
-	public void setDrsdTotalPrice(long drsdTotalPrice) {
-		this.drsdTotalPrice = drsdTotalPrice;
+	public void setDrsdTotalPrice(double d) {
+		this.drsdTotalPrice = d;
 	}
 
 	public int getDrshBillNo() {

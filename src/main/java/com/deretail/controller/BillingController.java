@@ -29,7 +29,10 @@ public class BillingController {
 	}
 	@GetMapping("/NewBilling")
 	public String newBilling(Model model) {
-		model.addAttribute("header", new DeRetailSellHeader() );
+		DeRetailSellHeader header = new DeRetailSellHeader();
+		//header = sellHeaderRepo.findTopByOrderByIdDesc();
+		System.out.println("last record : " + sellHeaderRepo.findMaxBillNo());
+		model.addAttribute("header", header );
 		return "NewBilling";
 	}
 	@PostMapping("/NewBilling")
@@ -48,7 +51,7 @@ public class BillingController {
 		header.setDrshTotalBill(amt);
 		System.out.println("new header :" + header);
 		sellHeaderRepo.save(header);
-		return "redirect:BillingHome";
+		return "redirect: /UserHome";
 	}
 	@GetMapping("/SearchInvoice")
 	public String searchInvoice(Model model, Integer drshBillNo) {
