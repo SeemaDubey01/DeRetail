@@ -41,7 +41,7 @@ function calculateTotalPrice(index){
     });
     
     
-    console.log("total bill is: " + totalBill + " and price is: " + totalPrice);
+    //console.log("total bill is: " + totalBill + " and price is: " + totalPrice);
 }
 function clearTable(){
     $('#billing-table').html('<tr></td><th>Sr</Src></th><th>Product Code</th><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Total Price</th></tr><tr><td>1</td><td><input type="number" size="10" id="sellDetails0.drsdProductCode" name="sellDetails[0].drsdProductCode" value="0"/></td><td><input type="text"  size="30"/></td><td><input type="number" size="12" step="0.01" id="sellDetails0.drsdUnitPrice" name="sellDetails[0].drsdUnitPrice" value="0.0"/></td><td><input type="number" size="4" id="sellDetails0.drsdQuantity" name="sellDetails[0].drsdQuantity" value="0"/></td><td style="width: 120px;"><div class="billing-total" id="totalPrice0">0</div></td></tr>');
@@ -54,7 +54,7 @@ function clearTable(){
 }
 function updateTotalBill(){
     var totalBill = 0.00;
-    console.log("index: " + index + " price: " + $('#totalPrice'+index).text());
+    //console.log("index: " + index + " price: " + $('#totalPrice'+index).text());
     for (i = 0; i<=index;i++){
         totalBill = totalBill + parseFloat($('#totalPrice'+i).text());  
     }

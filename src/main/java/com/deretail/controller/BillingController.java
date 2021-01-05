@@ -68,23 +68,6 @@ public class BillingController {
 		return "SearchInvoice";
 	}
 	
-//	@GetMapping("/SearchInvoice/{sellMap}")
-//	public String searchInvoiceWithBill(Model model, @PathVariable("sellMap") DeRetailSellDetails sellMap) {
-//		System.out.println("inside search with bill no");
-//		
-//		System.out.println("header: " + sellHeader);
-//		for (DeRetailSellDetails s : sellHeader.getSellDetails()) {
-//			System.out.println("detail : " + s);
-//		}
-//		model.addAttribute("sell", sellHeader);
-//		return "SearchInvoice";
-//	}
-	
-//	@GetMapping("/SearchInvoice")
-//	public String searchInvoiceWithBill2(Model model, int drshBillNo) {
-//		System.out.println("search with int");
-//		return "SearchInvoice";
-//	}
 	@GetMapping("/FeedInvoice")
 	public String feedInvoice() {
 		DeRetailSellHeader sellHeader = new DeRetailSellHeader();
