@@ -6,7 +6,7 @@
 <title>New Billing</title>
 <link href="/css/main.css" rel="stylesheet"/>
 <script src="/js/jquery-3.5.1.js"></script>
-<script src="/js/script.js"></script>
+<script src="/js/newbilling.js"></script>
 </head>
 <body>
 	<div class="header-bg">
@@ -57,6 +57,11 @@
 			<button type="button" class="billing-addrow" onclick="billing_addrow()">
 				<img src="/images/add-sign.png" width="20px"/>
 			</button><br/>
+			<!-- total box -->
+			<div><b>Total bill: </b></div>
+			<div id="totalBill">0</div>
+			<br/><br/>
+			
 			<button type="submit">Submit</button>
 			<button type="button" onclick="clearTable()">Clear</button>
 			</form>
