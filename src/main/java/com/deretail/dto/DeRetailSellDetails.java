@@ -66,8 +66,8 @@ public class DeRetailSellDetails {
 		return drsdTotalPrice;
 	}
 
-	public void setDrsdTotalPrice(double d) {
-		this.drsdTotalPrice = d;
+	public void setDrsdTotalPrice(double drsdTotalPrice) {
+		this.drsdTotalPrice = drsdTotalPrice;
 	}
 
 	public int getDrshBillNo() {

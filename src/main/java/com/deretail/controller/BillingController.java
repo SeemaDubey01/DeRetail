@@ -30,14 +30,15 @@ public class BillingController {
 	@GetMapping("/NewBilling")
 	public String newBilling(Model model) {
 		DeRetailSellHeader header = new DeRetailSellHeader();
-		//header = sellHeaderRepo.findTopByOrderByIdDesc();
-		System.out.println("last record : " + sellHeaderRepo.findMaxBillNo());
+		header.setDrshBillNo(sellHeaderRepo.findMaxBillNo() + 1);
+		header.setDrshSeller("Loggedin");
+		System.out.println("last record : " + header.getDrshBillNo());
 		model.addAttribute("header", header );
 		return "NewBilling";
 	}
 	@PostMapping("/NewBilling")
 	public String postNewBilling(Model model, DeRetailSellHeader header) {
-		int i=0; int amt=0;
+		int i=0; double amt=0;
 		for (DeRetailSellDetails s : header.getSellDetails()) {
 			s.setDrsdTotalPrice(s.getDrsdQuantity() * s.getDrsdUnitPrice());;
 			i++;
@@ -50,8 +51,8 @@ public class BillingController {
 		header.setDrshTotalItem(i);
 		header.setDrshTotalBill(amt);
 		System.out.println("new header :" + header);
-		sellHeaderRepo.save(header);
-		return "redirect: /UserHome";
+		//sellHeaderRepo.save(header);
+		return "redirect:../UserHome";
 	}
 	@GetMapping("/SearchInvoice")
 	public String searchInvoice(Model model, Integer drshBillNo) {

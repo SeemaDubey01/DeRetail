@@ -39,7 +39,7 @@ public class DeRetailSellHeader {
 	public void setDrshSeller(String drshSeller) {
 		this.drshSeller = drshSeller;
 	}
-	public long getDrshTotalItem() {
+	public int getDrshTotalItem() {
 		return drshTotalItem;
 	}
 	public void setDrshTotalItem(int drshTotalItem) {
