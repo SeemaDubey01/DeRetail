@@ -33,7 +33,7 @@ public class InventoryController {
 		inventory.setDriSellingPrice(20.00);
 		inventory.setDriStock(4);
 		inventory.setDriUnitPrice(12.00);
-		inventoryRepo.save(inventory);
+		//inventoryRepo.save(inventory);
 		return "Item";
 	}
 	
@@ -62,7 +62,7 @@ public class InventoryController {
 	}
 	@GetMapping("/ClearItem")
 	public String clearItem() {
-		inventoryRepo.deleteById(1001);
+		//inventoryRepo.deleteById(1001);
 		return "Item";
 	}
 }

@@ -13,7 +13,7 @@
 	<version>1.0</version>
 	<name>DeRetail</name>
 	<description>DeRetail for retail shop management</description>
-
+	<packaging>war</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
