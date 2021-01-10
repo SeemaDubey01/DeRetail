@@ -24,7 +24,7 @@ public class InventoryController {
 		return "EntryHome";
 	}
 
-	@GetMapping("/NewItem")
+	@GetMapping("/addInventory")
 	public String newItem() {
 		DeRetailInventory inventory = new DeRetailInventory();
 		inventory.setDriBrand("Nestle");
@@ -34,7 +34,7 @@ public class InventoryController {
 		inventory.setDriStock(4);
 		inventory.setDriUnitPrice(12.00);
 		//inventoryRepo.save(inventory);
-		return "Item";
+		return "addInventory";
 	}
 	
 	@GetMapping("/SearchItem")

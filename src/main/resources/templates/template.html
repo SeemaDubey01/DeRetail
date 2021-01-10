@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>	
+	<div class="header-bg" th:fragment="header">
+        <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
+        <div>De Retail</div>
+        <div class="header-button">
+            <a th:href="@{/UserHome}"><img th:src="@{/images/home-button.png}" alt="home"/></a>
+            <a th:href="@{/}"><img th:src="@{/images/logout.png}" alt="logout"/></a>
+            
+        </div>
+	</div>
+	<div class="home-nav-bar" th:fragment="navbar">
+		<div class="home-nav-bar-item"><a th:href="@{/UserHome}">Dashboard</a></div>
+	   	<div class="home-nav-bar-item"><a th:href="@{/Billing/NewBilling}">New Billing</a></div>
+	    <div class="home-nav-bar-item"><a th:href="@{/Billing/SearchInvoice}">Search Invoice</a></div>
+	   	<div class="home-nav-bar-item"><a th:href="@{/Inventory/addInventory}">Add Inventory</a></div>
+	</div>
+</body>
+</html>

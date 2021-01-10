@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.deretail.dto.DeRetailSellDetails;
-import com.deretail.dto.DeRetailSellHeader;
+import com.deretail.dto.SellDetails;
+import com.deretail.dto.SellHeader;
 import com.deretail.repo.SellDetailsRepo;
 import com.deretail.repo.SellHeaderRepo;
 
@@ -27,66 +27,80 @@ public class BillingController {
 	public String billingHome() {
 		return "BillingHome";
 	}
+	
 	@GetMapping("/NewBilling")
 	public String newBilling(Model model) {
-		DeRetailSellHeader header = new DeRetailSellHeader();
-		header.setDrshBillNo(sellHeaderRepo.findMaxBillNo() + 1);
-		header.setDrshSeller("Loggedin");
-		System.out.println("last record : " + header.getDrshBillNo());
+		SellHeader header = new SellHeader();
+		Integer lastBillNo;
+		try {
+			lastBillNo = sellHeaderRepo.findMaxBillNo();
+		} catch (Exception e) {
+			lastBillNo = 0;
+		}
+	
+		header.setBillNo( lastBillNo + 1);
+		header.setSeller("Loggedin");
+		System.out.println("last record : " + header.getBillNo());
 		model.addAttribute("header", header );
 		return "NewBilling";
 	}
+	
 	@PostMapping("/NewBilling")
-	public String postNewBilling(Model model, DeRetailSellHeader header) {
+	public String postNewBilling(Model model, SellHeader header) {
 		int i=0; double amt=0;
-		for (DeRetailSellDetails s : header.getSellDetails()) {
-			s.setDrsdTotalPrice(s.getDrsdQuantity() * s.getDrsdUnitPrice());;
+		for (SellDetails s : header.getSellDetails()) {
+			s.setTotalPrice(s.getQuantity() * s.getUnitPrice());;
 			i++;
-			s.setDrsdItemNo(i);
-			s.setDrsdBillItem(header.getDrshBillNo()*10000 + i);
-			amt += s.getDrsdTotalPrice();
-			s.setDrshBillNo(header.getDrshBillNo());
+			s.setItemNo(i);
+			s.setBillItem(header.getBillNo()*10000 + i);
+			amt += s.getTotalPrice();
+			s.setBillNo(header.getBillNo());
 			System.out.println(s);
 		}
-		header.setDrshTotalItem(i);
-		header.setDrshTotalBill(amt);
+		header.setTotalItem(i);
+		header.setTotalBill(amt);
 		System.out.println("new header :" + header);
-		//sellHeaderRepo.save(header);
+		sellHeaderRepo.save(header);
 		return "redirect:../UserHome";
 	}
+	
 	@GetMapping("/SearchInvoice")
-	public String searchInvoice(Model model, Integer drshBillNo) {
-		DeRetailSellHeader sell = new DeRetailSellHeader();
-		if (drshBillNo!= null ) {
-			Optional<DeRetailSellHeader> sellHeaderMap;
-			sellHeaderMap = sellHeaderRepo.findById(drshBillNo);
+	public String searchInvoice(Model model, Integer billNo) {
+		SellHeader sell = new SellHeader();
+		boolean isError = false;
+		if (billNo!= null ) {
+			isError = true;
+			Optional<SellHeader> sellHeaderMap;
+			sellHeaderMap = sellHeaderRepo.findById(billNo);
 			if(sellHeaderMap.isPresent()) {
 				sell = sellHeaderMap.get();
+				isError = false;
 			}
 		}
 		model.addAttribute("sell", sell);
+		model.addAttribute("isError", isError);
 		return "SearchInvoice";
 	}
 	
 	@GetMapping("/FeedInvoice")
 	public String feedInvoice() {
-		DeRetailSellHeader sellHeader = new DeRetailSellHeader();
-		sellHeader.setDrshBillNo(2);
-		sellHeader.setDrshSeller("Raju");
-		sellHeader.setDrshTotalBill(100);
-		sellHeader.setDrshTotalItem(2);
+		SellHeader sellHeader = new SellHeader();
+		sellHeader.setBillNo(2);
+		sellHeader.setSeller("Raju");
+		sellHeader.setTotalBill(100);
+		sellHeader.setTotalItem(2);
 		System.out.println("header: " + sellHeader);
 		int i;
-		DeRetailSellDetails sellDetails;
+		SellDetails sellDetails;
 		for (i=1;i<3;i++) {
-			sellDetails = new DeRetailSellDetails();
-			sellDetails.setDrsdBillItem(20000+i);
-			sellDetails.setDrsdItemNo(i);
-			sellDetails.setDrsdProductCode(111111+i);
-			sellDetails.setDrsdQuantity(1);
-			sellDetails.setDrsdTotalPrice(50*i);
-			sellDetails.setDrsdUnitPrice(50*i);
-			sellDetails.setDrshBillNo(2);
+			sellDetails = new SellDetails();
+			sellDetails.setBillItem(20000+i);
+			sellDetails.setItemNo(i);
+			sellDetails.setProductCode(111111+i);
+			sellDetails.setQuantity(1);
+			sellDetails.setTotalPrice(50*i);
+			sellDetails.setUnitPrice(50*i);
+			sellDetails.setBillNo(2);
 			
 			sellHeader.getSellDetails().add(sellDetails);
 			System.out.println("detail : " + sellDetails);

@@ -164,7 +164,7 @@ td {
 	width: 200px;
 	padding-left: 50px;
 }
-
+#errormsg{color:red; margin-left:50px}
 @media only screen and (max-width: 768px) {
 	.login-frame{
 		left: 25vw; width: max(40vw, 270px);
