@@ -55,7 +55,7 @@ $(document).ready(function(){
 				<tr th:each = "(s : ${sell.sellDetails})">
 					<td th:text = "${s.itemNo}">Item#	</td>
 					<td th:text = "${s.productCode}">Product code</td>
-					<td>Description</td>
+					<td th:text = "${s.productDescr}">Description</td>
 					<td th:text = "${s.unitPrice}">Unit Price</td>
 					<td th:text = "${s.quantity}">Quantity</td>
 					<td th:text = "${s.totalPrice}">Total Price</td>

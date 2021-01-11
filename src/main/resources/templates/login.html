@@ -4,7 +4,7 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login</title>
-<link href="css/main.css" rel="stylesheet"/>
+<link th:href="@{/css/main.css}" rel="stylesheet"/>
 <script type="text/javascript">
 if (typeof(Storage) !== "undefined") {
 	sessionStorage.setItem("myuser", "Manish");
@@ -15,7 +15,7 @@ if (typeof(Storage) !== "undefined") {
 <body>
 <div class="first-page">
     <div class="header-bg">
-        <img src="images/grocery-icon.png" alt="icon" width="80px" />
+        <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
         <div>Vikas Super Mart</div>
         <div class="header-button"></div>
     </div>
@@ -32,7 +32,7 @@ if (typeof(Storage) !== "undefined") {
         </div>
     </div>
     </form>
-    <a href="/"> Cancel</a>
+    <a th:href="@{home}"> Cancel</a>
 </div>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class BillingController {
 	
 	@GetMapping("/BillingHome")
 	public String billingHome() {
-		return "BillingHome";
+		return "home";
 	}
 	
 	@GetMapping("/NewBilling")

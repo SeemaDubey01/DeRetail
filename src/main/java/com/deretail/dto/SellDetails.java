@@ -10,6 +10,7 @@ public class SellDetails {
 	private int billItem;
 	private int itemNo;
 	private int productCode;
+	private String productDescr;
 	private int quantity;
 	private double unitPrice;
 	private double totalPrice;
@@ -46,6 +47,14 @@ public class SellDetails {
 		this.productCode = productCode;
 	}
 
+	public String getProductDescr() {
+		return productDescr;
+	}
+
+	public void setProductDescr(String productDescr) {
+		this.productDescr = productDescr;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -77,6 +86,5 @@ public class SellDetails {
 	public void setBillNo(int billNo) {
 		this.billNo = billNo;
 	}
-	
-	
+
 }

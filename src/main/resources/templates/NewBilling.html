@@ -35,7 +35,7 @@
 				<tr>
 					<td>1</td>
 					<td><input type="number" th:field="*{sellDetails[0].productCode}" size="10"/></td>
-					<td><input type="text"  size="30"/></td>
+					<td><input type="text"  th:field="*{sellDetails[0].productDescr}" size="30"/></td>
 					<td><input type="number" th:field="*{sellDetails[0].unitPrice}" size="12" step="0.01"/></td>
 					<td><input type="number" th:field="*{sellDetails[0].quantity}" size="4"/></td>
 					<td style="width: 120px;"><div class="billing-total" id="totalPrice0">0</div></td>
