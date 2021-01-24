@@ -1,77 +1,51 @@
 package com.deretail.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.deretail.dto.InventoryMaster;
-import com.deretail.repo.InventoryRepo;
+import com.deretail.dto.BrandMaster;
+import com.deretail.repo.BrandMasterRepo;
 
 @Controller
 @RequestMapping("/Inventory")
 public class InventoryController {
 	@Autowired
-	InventoryRepo inventoryRepo;
+	BrandMasterRepo brandMasterRepo;
 	
-	@GetMapping("/")
-	public String entryHome() {
-		return "EntryHome";
-	}
-	
-	@GetMapping("/InventoryMaster")
-	public String inventoryMaster() {
-		return "inventoryMaster";
-	}
-
-	@GetMapping("/addInventory")
-	public String newItem() {
-		return "addInventory";
-	}
-	@GetMapping("/addInventorySample")
-	public String newItemSample() {
-		InventoryMaster inventory = new InventoryMaster();
-		inventory.setBrand("Nestle");
-		inventory.setProdDescr("Chocolates");
-		inventory.setProductCode(1001);
-		inventory.setSellingPrice(20.00);
-		inventory.setStock(4);
-		inventory.setUnitPrice(12.00);
-		inventoryRepo.save(inventory);
-		return "addInventory";
+	@GetMapping("/addBrand")
+	public String getAddBrand(Model model) {
+		BrandMaster brandMaster = new BrandMaster();
+		model.addAttribute("brandMaster", brandMaster);
+		return "addBrand";
 	}
 	
-	@GetMapping("/SearchItem")
-	public String searchItem() {
-		List<InventoryMaster> inventory = new ArrayList<InventoryMaster>();
-		inventory = inventoryRepo.findAll();
-		for (InventoryMaster i : inventory) {
-			System.out.println(i);
+	@PostMapping("/addBrand")
+	public String postAddPost(Model model, BrandMaster brandDetail) {
+		System.out.println(brandDetail);
+		brandMasterRepo.save(brandDetail);
+		return "redirect:../UserHome";
+	}
+	
+	@GetMapping("/searchItem")
+	public String searchItem(BigDecimal barcode, Model model) {
+		BrandMaster brandMaster = new BrandMaster();
+		System.out.println("inside searchItem :" + brandMaster);
+		if (barcode != null) {
+			System.out.println("going to read brand master");
+			Optional <BrandMaster> brandMasterMap = brandMasterRepo.findById(brandMaster.getBarcode());
+			if (brandMasterMap.isPresent()) {
+				brandMaster = brandMasterMap.get();
+			}
 		}
-		return "Item";
+		model.addAttribute("brandMaster", brandMaster);
+		return "searchItem";
 	}
 	
-	@GetMapping("/SearchItem/{productNo}")
-	public String searchItem(@PathVariable ("productNo") int productNo) {
-		Optional<InventoryMaster> inventory;
-		
-		inventory = inventoryRepo.findById(productNo);
-		if (inventory.isPresent()) {	
-				System.out.println(inventory);
-		}
-		else {
-			System.out.println("Product not found");
-		}
-		return "Item";
-	}
-	@GetMapping("/ClearItem")
-	public String clearItem() {
-		//inventoryRepo.deleteById(1001);
-		return "Item";
-	}
 }
