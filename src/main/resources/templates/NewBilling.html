@@ -1,58 +1,101 @@
 <!DOCTYPE html>
-<html>
-<head  xmlns:th="http://www.thymeleaf.org">
-<meta charset="ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Billing</title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
-<script th:src="@{/js/jquery-3.5.1.js}"></script>
-<script th:src="@{/js/newbilling.js}"></script>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DeRetail - New Billing</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/newbilling.js}"></script>
 </head>
 <body>
-	<div th:replace="template :: header"></div>
-	<div class="container">
-		<div  th:replace="template :: navbar"></div>
-		<div class="home-content-bar">
-			<h1>New Billing</h1><br/>
-			<div class="container">
-				<div class="col-75">
-					<h2>Bill No: <span th:text="${header.billNo}">bill#</span></h2>
-					<h3>Location : Vikasnagar, Station Road, Raigarh</h3>
-					<span id="date-today">Date time</span>
-				</div>
-				<div class="col-25 justify-center">
-					<h2>Cashier  : <span th:text="${header.seller}">cashier</span></h2>
-				</div>
-			</div><br/>
-			<form th:action="@{NewBilling}" th:object="${header}" method="POST">
+<div class="wrapper">
+	<!-- sidebar -->
+<div th:replace="template :: sidebar"></div>
+<div class="container-fluid contentbar">
+	<div th:replace="template :: topnav"></div>
+<!-- content body -->
+	<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-11 col-lg-11 col-xl-11 m-1 bg-white shadow">
+			<h4>Bill No: <span th:text="${header.billNo}">bill#</span></h4>
+			<h5>Location : Vikasnagar, Station Road, Raigarh</h5>
+			<span id="date-today">Date time</span>	
+		</div>
+	
+	</div>
+	<div class="row">
+		<div class="col-md-4 m-1">
+		<div class="row bg-white shadow">
+			<div class="col">
+				
+			<form class="myform" th:action="@{NewBilling}" th:object="${header}" method="POST">
 			<input type="hidden" th:field="*{billNo}"/>
 			<input type="hidden" th:field="*{seller}"/>
-			<table id="billing-table" class="bill-entry-tbl">
-				<tr>
-					</td><th>Sr</Src></th><th>Product Code</th><th>Description</th>
-					<th>Unit Price</th><th>Quantity</th><th>Total Price</th>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td><input type="number" th:field="*{sellDetails[0].productCode}" size="10"/></td>
-					<td><input type="text"  th:field="*{sellDetails[0].productDescr}" size="30"/></td>
-					<td><input type="number" th:field="*{sellDetails[0].unitPrice}" size="12" step="0.01"/></td>
-					<td><input type="number" th:field="*{sellDetails[0].quantity}" size="4"/></td>
-					<td style="width: 120px;"><div class="billing-total" id="totalPrice0">0</div></td>
-				</tr>
-			</table>
-			<button type="button" class="billing-addrow" onclick="billing_addrow()">
-				<img th:src="@{/images/add-sign.png}" width="20px"/>
-			</button><br/>
-			<!-- total box -->
-			<div><b>Total bill: </b></div>
-			<div id="totalBill">0</div>
-			<br/><br/>
-			
-			<button type="submit">Submit</button>
-			<button type="button" onclick="clearTable()">Clear</button>
+			<div class="mb-3">
+			<label for="productCode" class="form-label">Product Code</label>
+			<input type="number" class="form-control" th:field="*{sellDetails[0].productCode}">
+			</div><div class="mb-3">
+			<label for="productDescr" class="form-label">Product</label>
+			<input type="text" class="form-control" th:field="*{sellDetails[0].productDescr}" >
+			</div><div class="mb-3">
+			<label for="unitPrice" class="form-label">Unit Price</label>
+			<input type="number" class="form-control" th:field="*{sellDetails[0].unitPrice}">
+			</div><div class="mb-3">
+			<label for="quantity" class="form-label">Quantity</label>
+			<input type="number" class="form-control" th:field="*{sellDetails[0].quantity}">
+			</div><div class="mb-3">
+			<label for="totalPrice" class="form-label">Total Price</label>
+			<input type="number" class="form-control" id="totalPrice0" disabled>
+			</div><div class="mb-3 align-items-center">
+			<button class="btn btn-primary" type="submit">Add</button>
+			<button class="btn btn-secondary" type="reset">Clear</button>
+			</div>
 			</form>
+		
+			</div>
 		</div>
-	</div>
+		<div class="row bg-white shadow mt-2"><div class="col">
+		<!-- total price --> 
+		<div>
+			<h4 class="text-success">Total bill</h4>
+			<div class="row">
+				<div class="col-6">Total </div>
+				<div class="col-1">Rs.</div>
+				<div class="col-4 text-right">1000.00</div>
+			</div>
+			<div class="row">
+				<div class="col-6">GST 18%</div>
+				<div class="col-1">Rs.</div>
+				<div class="col-4 text-right">180.00</div>
+			</div>
+			<div class="row">
+			<div class="col-11 border-bottom m-2"></div>
+			</div>
+			<div class="row">
+				<div class="col-6">Payable</div>
+				<div class="col-1">Rs.</div>
+				<div class="col-4 text-right">1180.00</div>
+			</div>
+		</div>
+		</div></div>
+		
+		</div>
+
+		<!-- item details -->
+		<div class="col-md-7 m-1  bg-white shadow">
+			Item details
+		</div>
+		
+		
+	</div> <!-- end of content row -->
+	</div> <!-- end of content body -->
+
+</div>
+</div>
 </body>
 </html>

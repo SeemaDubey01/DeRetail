@@ -29,7 +29,7 @@ function inputBgColor(){
     $('input').focusout(function(){
         $(this).css("background-color","#FFFFFF");
     });
-    $('input').focus(function(){$(this).select();})
+   // $('input').focus(function(){$(this).select();})
 }
 function calculateTotalPrice(index){
     let totalPrice = 0;

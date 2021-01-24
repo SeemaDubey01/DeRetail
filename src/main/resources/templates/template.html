@@ -1,27 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<title>Template</title>
+ 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
 </head>
 <body>	
-	<div class="header-bg" th:fragment="header">
-        <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
-        <div>De Retail</div>
-        <div class="header-button">
-            <a th:href="@{/UserHome}"><img th:src="@{/images/home-button.png}" alt="home"/></a>
-            <a th:href="@{/logout}"><img th:src="@{/images/logout.png}" alt="logout"/></a>
-            
-        </div>
+<div class="wrapper">
+	<!-- sidebar -->
+<div class="container-fluid sidebar" th:fragment="sidebar">
+	<!-- sidebar top navigation -->
+	<nav class="navbar fixed-top navbar-dark header-hr">
+		<div class="navbar-brand fas fa-shopping-cart"></div>
+		<div class="navbar-brand" id="sidebar-brand">DeRetail</div>
+	</nav>
+
+	<!-- sidebar menu -->
+	<nav class="navbar navbar-dark fixed-top sidebar-fixed-nav">
+	<ul class="nav navbar-nav navbar-dark" >
+		<li class="nav-item"><a class="nav-link" th:href="@{/UserHome}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/Billing/NewBilling}"><i class="fas fa-file-invoice-dollar"></i><span>New Invoice</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/Billing/SearchInvoice}"><i class="fas fa-search-dollar"></i><span style="padding-left: 7px;">Search Inv</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-database"></i><span style="padding-left: 7px;">Invenstory</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-plus-circle"></i><span style="padding-left: 10px;">Add Item</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{logout}"><i class="fas fa-power-off"></i><span style="padding-left: 10px;">Log out</span></a></li>
+	</ul>
+	</nav>
+	<div class="sidebarHalfToggler" id="sidebarHalfTogglerDiv"></div>
+	<div class="fixed-bottom text-white ml-1">
+		<span>DeRetail@2021</span>
 	</div>
-	<div class="home-nav-bar" th:fragment="navbar">
-		<div class="home-nav-bar-item"><a th:href="@{/UserHome}">Dashboard</a></div>
-	   	<div class="home-nav-bar-item"><a th:href="@{/Billing/NewBilling}">New Billing</a></div>
-	    <div class="home-nav-bar-item"><a th:href="@{/Billing/SearchInvoice}">Search Invoice</a></div>
-	   	<div class="home-nav-bar-item"><a th:href="@{/Inventory/addInventory}">Add Inventory</a></div>
-		<div class="home-nav-bar-item"><a th:href="@{/Inventory/InventoryMaster}">Inventory Master</a></div>
-		<div class="home-nav-bar-item"><a th:href="@{/Inventory/addBrand}">Add Brand</a></div>
-		<div class="home-nav-bar-item"><a th:href="@{/Inventory/searchItem}">Search Brand</a></div>
-	</div>
+</div>  <!-- end of sidebar-->
+	
+<!-- content -->
+<div class="container-fluid contentbar">
+	<!-- content top bar-->
+	<div th:fragment="topnav">
+	<nav class="navbar fixed-top navbar-expand bg-white top-nav shadow">
+		<div class="container-fluid">
+		<button class="sidebar-toggle-top d-md-none btn" type="button" data-toggle="collapse" data-target="#">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="nav navbar-nav ml-auto">
+			<li>
+				<i class="fas fa-bell fa-fw"></i>
+			</li>
+			<li>
+				<span class="topbar-divider"></span>
+			</li>
+			<li>
+				<a href="#">
+					<span class="d-none d-lg-inline">Admin</span>
+					<img class="rounded-circle img-user" th:src="@{/images/avatar1.jpeg}"/>
+				</a>
+			</li>
+		</ul>
+		</div>
+	</nav>
+	<div style="height: 70px;"></div>
+	</div>	
+	<!-- content body -->
+		
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
 </body>
 </html>

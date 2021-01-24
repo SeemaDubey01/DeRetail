@@ -23,11 +23,6 @@ public class BillingController {
 	@Autowired
 	SellDetailsRepo sellDetailsRepo;
 	
-	@GetMapping("/BillingHome")
-	public String billingHome() {
-		return "home";
-	}
-	
 	@GetMapping("/NewBilling")
 	public String newBilling(Model model) {
 		SellHeader header = new SellHeader();
