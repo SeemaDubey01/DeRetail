@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html>
-<head xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login</title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
-<script type="text/javascript">
-if (typeof(Storage) !== "undefined") {
-	sessionStorage.setItem("myuser", "Manish");
-	console.log("storing session");
-}
-</script>
+<link rel="stylesheet" th:href="@{/css/style-home.css}"/>
 </head>
 <body>
 <div class="first-page">
-    <div class="header-bg">
-        <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
-        <div>Vikas Super Mart</div>
-        <div class="header-button"></div>
-    </div>
-    <form action="UserHome" method="GET">
+    <header>
+        <div class="header-bg">
+            <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
+            <div>DeRetail</div>
+            <div class="header-button"></div>
+        </div>
+    </header>
+    <form action="login" method="POST">
     <div class="login-frame">
         <div class="login-frame-inner">
             <div class="login-frame-header">Login</div>
+            <div class="login-frame-label" style="margin-bottom:0;margin-right:0"
+            	th:if="${param.error} and ${session}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+            	<span th:text="${errorMsg}" style="color:red; background-color:rgb(0,0,0,0.5);"></span>
+            </div>
             <label class="login-frame-label">Username</label><br/>
-            <input class="login-frame-input" type="text" id="username"><br/>
+            <input class="login-frame-input" type="text" name="username"><br/>
             <label class="login-frame-label">Password</label><br/>
-            <input class="login-frame-input" type="password" id="password"><br/>
+            <input class="login-frame-input" type="password" name="password"><br/>
             <button type="submit" class="login-frame-btn-submit">Submit</button>
-            <button type="cancel" class="login-frame-btn-cancel">Cancel</button>
+            <a th:href="@{/}">
+            <button type="button" class="login-frame-btn-cancel">Cancel</button></a>
         </div>
     </div>
     </form>

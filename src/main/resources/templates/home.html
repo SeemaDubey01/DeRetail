@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
-<head xmlns:th="http://www.thymeleaf.org">
-<meta charset="ISO-8859-1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Insert title here</title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
+<title>DeRetail - Home</title>
+<link rel="stylesheet" th:href="@{/css/style-home.css}"/>
 <script>
 sessionStorage.clear();
 </script>
@@ -13,11 +13,11 @@ sessionStorage.clear();
 <div class="first-page">
     <div class="header-bg">
         <img th:src="@{/images/grocery-icon.png}" alt="icon" width="80px" />
-        <div>Vikas Super Mart</div>
+        <div>DeRetail</div>
         <div class="header-button"></div>
     </div>
     <div class="home-enter">
-        <a th:href="@{login}">Enter</a>
+        <a th:href="@{UserHome}">Enter</a>
     </div>
 </div>
 </body>
