@@ -69,7 +69,7 @@ function calculateBillAmount(){
     //    console.log("index: " + index + " amt: " + item.totalPrice);
         totalBill = +totalBill + +item.totalPrice;
     });
-    gst = +totalBill * 18 / 100;
+    gst = +totalBill * 0 / 100;
     payable = +totalBill + gst;
 
     $('#totalBill').text(totalBill.toFixed(2));
@@ -80,8 +80,11 @@ function calculateBillAmount(){
     $('#pay-by-cash-amt').text(payable.toFixed(2));
 }
 function billSubmit(){
+    let d = new Date();
+    let dateSold =  d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) + ' ' + d.toTimeString().substr(0,8);
+    $('#dateSold').val(dateSold);
     $('#user').val('admin');
-    $('#sellDetails').val(wsSellDetailsArray);
+  //  $('#sellDetails').val(wsSellDetailsArray);
     wsSellDetailsArray.forEach(function(item,index){
     	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].itemNo" value="'+item.itemNo+'">');
     	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].productCode" value="'+item.productCode+'">');

@@ -1,5 +1,6 @@
 package com.deretail.dto;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 public class SellHeader {
 	@Id
 	private int billNo;
+	private Timestamp dateSold;
 	private String seller;
 	private int totalItem;
 	private double totalBill;
@@ -36,6 +38,16 @@ public class SellHeader {
 
 	public void setBillNo(int billNo) {
 		this.billNo = billNo;
+	}
+
+
+	public Timestamp getDateSold() {
+		return dateSold;
+	}
+
+
+	public void setDateSold(Timestamp dateSold) {
+		this.dateSold = dateSold;
 	}
 
 
@@ -77,5 +89,7 @@ public class SellHeader {
 	public void setSellDetails(List<SellDetails> sellDetails) {
 		this.sellDetails = sellDetails;
 	}
+
+
 	
 }

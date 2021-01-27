@@ -9,7 +9,7 @@
 .sidebar {
     max-width: 13rem;
     background-color:#1a6c19;
-    box-shadow: 2rem 2.75rem 0 rgba(58,59,69,.15)!important;
+   	min-height:100vh;
 }
 .sidebar > .fixed-top {right: auto;}
 .sidebar.toggled {display: none;}

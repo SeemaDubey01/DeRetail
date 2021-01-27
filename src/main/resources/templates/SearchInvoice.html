@@ -1,73 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Invoice</title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
-<script th:src="@{/js/jquery-3.5.1.js}"></script>
-<script th:src="@{/js/script.js}"></script>
-<script th:src="@{/js/searchinvoice.js}"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	var iBillNo = "[[${sell.billNo}]]";
-	var isError = "[[${isError}]]";
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DeRetail - New Billing</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/searchinvoice.js}"></script>
+<script th:inline="javascript">
+$(document).ready(function (){
+    $('#sell-detail-div').hide();
+    wsSellList = [[${sellList}]];
+})
 
-	checkData(iBillNo, isError);
-});
 </script>
 </head>
 <body>
-	<div th:replace="template :: header"></div>
-	<div class="container">
-		<div  th:replace="template :: navbar"></div>
-		<div class="home-content-bar">
-			<h1>Search Invoice</h1>
-			<div class="container">
-				<div class="col-75">
-					<form th:action="@{SearchInvoice}" th:object="${sell}" method="GET">
-						<label>Invoice No: </label>
-						<input type="text" th:field="*{billNo}"/>
-						<button type="submit">Submit</button>
-					</form><p/>
-				</div>
-				<div class="col-25 justify-center">
-					<h2>Cashier  : <span id="cashier">cashier</span></h2>
-				</div>
-			</div><br/>
-			<div id="search-result">
-			<div class="container">
-				<div class="col-75">
-					<h2>Bill No: <span th:text="${sell.billNo}">bill#</span></h2>
-					<h3>Location : Vikasnagar, Station Road, Raigarh</h3>
-					<span id="date-today">Date time</span></h3>
-				</div>
-				<div class="col-25 justify-center">
-					<h2>Seller  : <span th:text="${sell.seller}">cashier</span></h2>
-				</div>
-			</div><br/>
+<div class="wrapper">
+	<!-- sidebar -->
+	<div th:replace="template :: sidebar"></div>
+<!-- content -->
+<div class="container-fluid contentbar">
+	<!-- content top bar-->
+	<div th:replace="template :: topnav"></div>
+	<!-- content body -->
+<div class="container-fluid">
+<!--  start content from here -->
 
-			<table>
-				<tr>
-					<th>Sr</th><th>Product Code</th><th>Description</th>
-					<th>Unit Price</th><th>Quantity</th><th>Total Price</th>
-				</tr>
-				<tr th:each = "(s : ${sell.sellDetails})">
-					<td th:text = "${s.itemNo}">Item#	</td>
-					<td th:text = "${s.productCode}">Product code</td>
-					<td th:text = "${s.productDescr}">Description</td>
-					<td th:text = "${s.unitPrice}">Unit Price</td>
-					<td th:text = "${s.quantity}">Quantity</td>
-					<td th:text = "${s.totalPrice}">Total Price</td>
-				</tr>
-			</table><br/>
-			<!-- total box -->
-			<div><b>Total bill: </b></div>
-			<div id="totalBill" th:text = "${sell.totalBill}">0</div>
-			<br/><br/>
+
+<!-- search options -->
+<div class="row mb-2"> 
+	<div class="col p-2 bg-white shadow">
+		<form action="SearchInvoice" method="GET" th:object="${modelDTO}" onsubmit="validateSearch()">
+		<div class="row">		
+		<div class="col-sm-4 col-md-4 myform">
+			<label class="form-label">Start Date: </label>
+			<input type="date" class="form-control" th:field="*{startDate}" id="sstartDate">
 		</div>
-		<div id="errormsg">Please put the correct invoice number</div>
+		<div class="col-sm-4 col-md-4 myform">
+			<label class="form-label">End Date: </label>
+			<input type="date" class="form-control" th:field="*{endDate}" id="sendDate">
 		</div>
-	</div> 
+		<div class="col-sm-4 col-md-4 myform">
+			<label class="form-label">Bill#: </label>
+			<input type="number" class="form-control" th:field="*{billNo}" id="sbillNo">
+		</div>
+		<div class="col-md-2 offset-md-10 mt-2">
+			<button class="btn btn-primary btn-block" type="submit">Search</button>
+		</div>
+		</div>
+		</form>
+	</div>
+</div>
+
+<!-- search result -->
+
+<div class="row" id="sell-header-div">
+<div class="col bg-white shadow p-0">
+	<div class="table-responsive">
+		<table class="table table-hover" id="search-table">
+			<tr class="table-light">
+				<th>Date</th>
+				<th>Invoice#</th>
+				<th>Seller</th>
+				<th>#Items</th>
+				<th>Total Amount</th>
+				<th></th>
+			</tr>
+			<tr th:each="sell: ${sellList}">
+				<td th:text="${#strings.substring(sell.dateSold,0,10)}">27 Jan 2021</td>
+				<td th:text="${sell.billNo}">1234</td>
+				<td th:text="${sell.seller}">Sample Seller</td>
+				<td th:text="${sell.totalItem}">4</td>
+				<td th:text="${sell.totalBill}">123.45</td>
+				<td class="text-center">
+					<span class="btn fas fa-info text-info" data-toggle="tooltip" title="Details" th:onclick="'showSellDetails(' + ${sellStat.index} + ')'">
+					</span>
+					<span class=" fas fa-edit" >	
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>
+
+
+<div class="row" id="sell-detail-div">
+<div class="col-md-12 bg-white shadow">
+	<div class="col-12 text-right">
+		<button class="btn close" onclick="showSellHeader()">&times;</button>
+	</div>
+	<h4 class="text-success">Bill No: <span id="dBillNo"></span></h4>
+	<span id="dDate"> Date</span>
+	<div class="table-responsive">
+		<table class="table table-hover" id="search-detail-table">
+			<tr class="table-light">
+			<th>#</th>
+			<th>Description</th>
+			<th>Unit Price</th>
+			<th>Qty</th>
+			<th>Total Price</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>test bill</td>
+				<td>11.11</td>
+				<td>2</td>
+				<td>22.22</td>
+				</tr>
+	
+		</table>
+	</div>
+	<div class="col-md-6">
+		<div class="col-12 border-bottom mb-2"></div>
+		<h4 class="text-success">Total bill</h4>
+		<div class="row">
+			<div class="col-6">Total </div>
+			<div class="col-1">Rs.</div>
+			<div class="col-4 text-right" id="totalBill">0.00</div>
+		</div>
+		<div class="row">
+			<div class="col-6">GST (NA)</div>
+			<div class="col-1">Rs.</div>
+			<div class="col-4 text-right" id="gst">0.00</div>
+		</div>
+		<div class="col-12 border-bottom mb-2"></div>
+		<div class="row mb-3">
+			<div class="col-6">Payable</div>
+			<div class="col-1">Rs.</div>
+			<div class="col-4 text-right" id="payable">0.00</div>
+		</div>
+	</div>
+</div>
+</div>
+
+</div> <!-- end you content here -------->
+		
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
 </body>
 </html>
