@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class SellDetails {
 
 	@Id
-	private int billItem;
+	private int billItem; // billNo * 10000 + itemNo
 	private int itemNo;
 	private int productCode;
 	private String productDescr;
@@ -19,7 +19,7 @@ public class SellDetails {
 
 	@Override
 	public String toString() {
-		return "sell details: " + billItem + " " + itemNo + " " + productCode 
+		return "sell details: " + billItem + " " + itemNo + " " + productCode + " " + productDescr  
 				+ " " + quantity + " " + unitPrice + " " + totalPrice + "bill: " + billNo;
 	}
 

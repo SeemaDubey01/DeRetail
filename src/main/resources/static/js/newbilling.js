@@ -1,27 +1,19 @@
 var index = 0;
-var totalBill = 0;
+var wsSellDetailsArray = [];
 $(document).ready(function(){
     /* write current date and time on page */ 
     let d = new Date();
-    $('#date-today').html('<b>Date :</b>' + d.toDateString() + '   <b>Time:</b> ' + d.toTimeString().substr(0,8));
+    $('#date-today').html('<b>Date :</b> ' + d.toDateString() + '   <b>Time:</b> ' + d.toTimeString().substr(0,8));
     
     /* change background color of input boxes */
     inputBgColor();
 
-    /* Calculate total */
-    calculateTotalPrice(0);
+    initAddForm();
+    /* Calculate total when unit price or quantity changes */
+    calculateTotalPrice();
+    
 });
-function billing_addrow(){
-    index = index + 1;
-    $('#billing-table').append('<tr><td>'+(index+1)+'</td><td><input type="number" size="10" id="sellDetails0.productCode" name="sellDetails['+index+'].productCode" value="0"/></td><td><input type="text" id="sellDetails0.productDescr" name="sellDetails['+index+'].productDescr" size="30"/></td><td><input type="number" size="12" step="0.01" id="sellDetails0.unitPrice" name="sellDetails['+index+'].unitPrice" value="0.0"/></td><td><input type="number" size="4" id="sellDetails0.quantity" name="sellDetails['+index+'].quantity" value="0"/></td><td style="width: 120px;"><div class="billing-total" id="totalPrice'+index+'">0</div></td></tr>');
-      
-    inputBgColor();
-
-    /* Calculate total */
-    calculateTotalPrice(index);    
-
-    $('input[name="sellDetails['+index+'].productCode"').focus();
-}
+ /* change background color of input boxes */
 function inputBgColor(){
     $('input').focusin(function(){
         $(this).css("background-color","#FFFFCC");
@@ -29,34 +21,85 @@ function inputBgColor(){
     $('input').focusout(function(){
         $(this).css("background-color","#FFFFFF");
     });
-   // $('input').focus(function(){$(this).select();})
+    $('input').focus(function(){$(this).select();})
 }
+ /* Calculate total when unit price or quantity changes */
 function calculateTotalPrice(index){
     let totalPrice = 0;
-    $('input[name="sellDetails['+index+'].quantity"').focusout(function(){
-        totalPrice = $('input[name="sellDetails['+index+'].quantity"').val() * $('input[name="sellDetails['+index+'].unitPrice"').val();
-        $('#totalPrice'+index).text(totalPrice.toFixed(2));  
-        updateTotalBill();
-        //console.log('q: ' + $('input[name="sellDetails['+index+'].quantity"').val() + ' a: ' + $('input[name="sellDetails['+index+'].unitPrice"').val() + ' index:' +index);  
+    $('#quantity').focusout(function(){
+        totalPrice = $('#quantity').val() * $('#unitPrice').val();
+        $('#totalPrice').val(totalPrice.toFixed(2));  
     });
-    
-    
-    //console.log("total bill is: " + totalBill + " and price is: " + totalPrice);
+    $('#unitPrice').focusout(function(){
+        totalPrice = $('#quantity').val() * $('#unitPrice').val();
+        $('#totalPrice').val(totalPrice.toFixed(2));  
+    });
 }
-function clearTable(){
-    $('#billing-table').html('<tr></td><th>Sr</Src></th><th>Product Code</th><th>Description</th><th>Unit Price</th><th>Quantity</th><th>Total Price</th></tr><tr><td>1</td><td><input type="number" size="10" id="sellDetails0.productCode" name="sellDetails[0].productCode" value="0"/></td><td><input type="text" id="sellDetails0.productDescr" name="sellDetails[0].productDescr" size="30"/></td><td><input type="number" size="12" step="0.01" id="sellDetails0.unitPrice" name="sellDetails[0].unitPrice" value="0.0"/></td><td><input type="number" size="4" id="sellDetails0.quantity" name="sellDetails[0].quantity" value="0"/></td><td style="width: 120px;"><div class="billing-total" id="totalPrice0">0</div></td></tr>');
-    index=0;
-    totalBill = 0;
-    $('#totalBill').text(totalBill);
-    inputBgColor();
-    calculateTotalPrice(index);
-    $('input[name="sellDetails['+index+'].productCode"').focus();
+function resetNewBill(){
+    $('#billing-table').html('<tbody><tr class="table-light"><th>#</th><th>Description</th><th>Unit Price</th><th>Qty</th><th>Total Price</th></tr></tbody>');
+    index = 0;
+    wsSellDetailsArray = [];
+    calculateBillAmount();
 }
-function updateTotalBill(){
-    var totalBill = 0.00;
-    //console.log("index: " + index + " price: " + $('#totalPrice'+index).text());
-    for (i = 0; i<=index;i++){
-        totalBill = totalBill + parseFloat($('#totalPrice'+i).text());  
-    }
-    $('#totalBill').text(totalBill);    
+function addItem(){
+    /*if($('#productCode').val()==0){
+        alert ("product code can not be blank");
+        return;
+    } */
+    index++;
+    $('#billing-table').append('<tr><td>'+index+'</td><td>'+$('#productDescr').val()+'</td><td>'+$('#unitPrice').val()+'</td><td>'+$('#quantity').val()+'</td><td>'+$('#totalPrice').val()+'</td></tr>');
+    storeWSSellDetails();
+    initAddForm();
+    calculateBillAmount();
+}
+function initAddForm(){
+    let amt =0;
+    $('#productCode').val(0);
+    $('#productDescr').val('');
+    $('#unitPrice').val(amt.toFixed(2));
+    $('#quantity').val(0);
+    $('#totalPrice').val(amt.toFixed(2));
+    $('#productCode').select();
+}
+function calculateBillAmount(){
+    let totalBill = 0.00;
+    let gst = 0.00;
+    let payable = 0.00;
+    wsSellDetailsArray.forEach(function (item, index){
+    //    console.log("index: " + index + " amt: " + item.totalPrice);
+        totalBill = +totalBill + +item.totalPrice;
+    });
+    gst = +totalBill * 18 / 100;
+    payable = +totalBill + gst;
+
+    $('#totalBill').text(totalBill.toFixed(2));
+    $('#gst').text(gst.toFixed(2));
+    $('#payable').text(payable.toFixed(2));
+
+    $('#pay-by-card-amt').text(payable.toFixed(2));
+    $('#pay-by-cash-amt').text(payable.toFixed(2));
+}
+function billSubmit(){
+    $('#user').val('admin');
+    $('#sellDetails').val(wsSellDetailsArray);
+    wsSellDetailsArray.forEach(function(item,index){
+    	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].itemNo" value="'+item.itemNo+'">');
+    	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].productCode" value="'+item.productCode+'">');
+    	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].productDescr" value="'+item.productDescr+'">');
+    	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].unitPrice" value="'+item.unitPrice+'">');
+    	$('#billing-form').append('<input type="hidden" name="sellDetails['+index+'].quantity" value="'+item.quantity+'">');
+    });
+    $('#billing-form').submit();
+}
+function storeWSSellDetails(){
+    var wsSellDetails = new WSSellDetails(index, $('#productCode').val(),$('#productDescr').val(),$('#unitPrice').val(),$('#quantity').val(),$('#totalPrice').val());
+    wsSellDetailsArray.push(wsSellDetails);
+}
+function WSSellDetails(wsIndex, wsProductCode, wsProductDescr, wsUnitPrice, wsQuantity){
+    this.itemNo = wsIndex;
+    this.productCode = wsProductCode;
+    this.productDescr = wsProductDescr;
+    this.unitPrice = wsUnitPrice;
+    this.quantity = wsQuantity;
+    this.totalPrice = (wsUnitPrice * wsQuantity).toFixed(2);
 }

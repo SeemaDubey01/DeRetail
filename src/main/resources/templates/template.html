@@ -21,14 +21,14 @@
 	</nav>
 
 	<!-- sidebar menu -->
-	<nav class="navbar navbar-dark fixed-top sidebar-fixed-nav">
+	<nav class="navbar navbar-dark position-sticky sidebar-fixed-nav">
 	<ul class="nav navbar-nav navbar-dark" >
 		<li class="nav-item"><a class="nav-link" th:href="@{/UserHome}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
 		<li class="nav-item"><a class="nav-link" th:href="@{/Billing/NewBilling}"><i class="fas fa-file-invoice-dollar"></i><span>New Invoice</span></a></li>
-		<li class="nav-item"><a class="nav-link" th:href="@{/Billing/SearchInvoice}"><i class="fas fa-search-dollar"></i><span style="padding-left: 7px;">Search Inv</span></a></li>
-		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-database"></i><span style="padding-left: 7px;">Invenstory</span></a></li>
-		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-plus-circle"></i><span style="padding-left: 10px;">Add Item</span></a></li>
-		<li class="nav-item"><a class="nav-link" th:href="@{logout}"><i class="fas fa-power-off"></i><span style="padding-left: 10px;">Log out</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-search-dollar"></i><span>Search Inv</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-database"></i><span>Invenstory</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{#}"><i class="fas fa-plus-circle"></i><span>Add Item</span></a></li>
+		<li class="nav-item"><a class="nav-link" th:href="@{/logout}"><i class="fas fa-power-off"></i><span>Log out</span></a></li>
 	</ul>
 	</nav>
 	<div class="sidebarHalfToggler" id="sidebarHalfTogglerDiv"></div>
@@ -36,34 +36,34 @@
 		<span>DeRetail@2021</span>
 	</div>
 </div>  <!-- end of sidebar-->
-	
+
 <!-- content -->
 <div class="container-fluid contentbar">
 	<!-- content top bar-->
 	<div th:fragment="topnav">
 	<nav class="navbar fixed-top navbar-expand bg-white top-nav shadow">
 		<div class="container-fluid">
-		<button class="sidebar-toggle-top d-md-none btn" type="button" data-toggle="collapse" data-target="#">
-			<i class="fa fa-bars"></i>
-		</button>
-		<ul class="nav navbar-nav ml-auto">
-			<li>
-				<i class="fas fa-bell fa-fw"></i>
-			</li>
-			<li>
-				<span class="topbar-divider"></span>
-			</li>
-			<li>
-				<a href="#">
-					<span class="d-none d-lg-inline">Admin</span>
-					<img class="rounded-circle img-user" th:src="@{/images/avatar1.jpeg}"/>
-				</a>
-			</li>
-		</ul>
+			<button class="sidebar-toggle-top d-md-none btn" type="button" data-toggle="collapse" data-target="#">
+				<i class="fa fa-bars"></i>
+			</button>
+			<ul class="nav navbar-nav ml-auto">
+				<li>
+					<i class="fas fa-bell fa-fw"></i>
+				</li>
+				<li>
+					<span class="topbar-divider"></span>
+				</li>
+				<li>
+					<a href="#">
+						<span class="d-none d-lg-inline">Admin</span>
+						<img class="rounded-circle img-user" th:src="@{/images/avatar1.jpeg}"/>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</nav>
 	<div style="height: 70px;"></div>
-	</div>	
+	</div>	<!--  end of topnav -->
 	<!-- content body -->
 		
 </div> <!-- end of content area-->

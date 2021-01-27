@@ -35,7 +35,7 @@ public class BillingController {
 	
 		header.setBillNo( lastBillNo + 1);
 		header.setSeller("Loggedin");
-		System.out.println("last record : " + header.getBillNo());
+		//System.out.println("last record : " + header.getBillNo());
 		model.addAttribute("header", header );
 		return "NewBilling";
 	}
@@ -50,7 +50,7 @@ public class BillingController {
 			s.setBillItem(header.getBillNo()*10000 + i);
 			amt += s.getTotalPrice();
 			s.setBillNo(header.getBillNo());
-			System.out.println(s);
+			System.out.println("sellDetails: "+ s);
 		}
 		header.setTotalItem(i);
 		header.setTotalBill(amt);
