@@ -26,7 +26,7 @@ public class BillingController {
 	SellDetailsRepo sellDetailsRepo;
 	
 	@GetMapping("/NewBilling")
-	public String newBilling(Model model) {
+	public String newBilling(Model model, SearchInvoiceDTO modelDTO) {
 		SellHeader header = new SellHeader();
 		Integer lastBillNo;
 		try {
@@ -34,9 +34,25 @@ public class BillingController {
 		} catch (Exception e) {
 			lastBillNo = 0;
 		}
-	
+		
+		
+		if (modelDTO!=null && modelDTO.getBillNo() > 0 ) { /*search the bill and send on scree */
+			Optional<SellHeader> headerMap = sellHeaderRepo.findById(modelDTO.getBillNo());
+			if(headerMap.isPresent()) {
+				header = headerMap.get();
+			}
+			SellDetails detail0 = new SellDetails();
+			detail0.setBillNo(header.getBillNo());
+			detail0.setItemNo(header.getTotalItem()+1);
+			detail0.setProductCode(0);
+			detail0.setProductDescr("Reversal of bill# " + modelDTO.getBillNo());
+			detail0.setQuantity(1);
+			detail0.setUnitPrice(header.getTotalBill() * -1);
+			detail0.setTotalPrice(header.getTotalBill() * -1);
+			header.getSellDetails().add(detail0);
+		}
+		
 		header.setBillNo( lastBillNo + 1);
-		header.setSeller("Loggedin");
 		//System.out.println("last record : " + header.getBillNo());
 		model.addAttribute("header", header );
 		return "NewBilling";

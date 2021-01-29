@@ -110,3 +110,5 @@
 @media (max-width:767px){.sidebarHalfToggler{display: none;}}
 .border-transparent-1 {border: 1rem solid transparent;}
 .myform label {margin-bottom:0;padding-left: 5px;}
+.m-width-td-1 {max-width:1rem;}
+.m-width-td-4 {max-width:5rem;}

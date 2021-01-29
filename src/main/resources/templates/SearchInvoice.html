@@ -80,7 +80,7 @@ $(document).ready(function (){
 				<td class="text-center">
 					<span class="btn fas fa-info text-info" data-toggle="tooltip" title="Details" th:onclick="'showSellDetails(' + ${sellStat.index} + ')'">
 					</span>
-					<span class=" fas fa-edit" >	
+					<span class="btn fas fa-edit text-primary" data-toggle="tooltip" title="Update" th:onclick="'itemEditSubmit('+${sell.billNo}+')'">	
 					</span>
 				</td>
 			</tr>
@@ -135,6 +135,13 @@ $(document).ready(function (){
 			<div class="col-1">Rs.</div>
 			<div class="col-4 text-right" id="payable">0.00</div>
 		</div>
+	</div>
+	<div class="text-center mb-2">
+		<form action="NewBilling" method="GET" th:object="${modelDTO}" id="formEditItem">
+			<input type="hidden" th:field="*{billNo}" id="ubillNo">
+			<button class="btn btn-danger" type="submit">Update</button>
+			<button class="btn btn-secondary" type="button" onclick="showSellHeader()">Close</button>
+		</form>
 	</div>
 </div>
 </div>

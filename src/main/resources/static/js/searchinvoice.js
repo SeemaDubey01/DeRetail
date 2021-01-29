@@ -30,6 +30,7 @@ function showSellDetails(sell){
 	$('#search-detail-table').append('</tbody>');
 	$('#totalBill').text(wsSellList[sell].totalBill);
 	$('#payable').text(wsSellList[sell].totalBill);
+	$('#ubillNo').val(wsSellList[sell].billNo);
 	
     $('#sell-header-div').hide();
     $('#sell-detail-div').show();
@@ -37,6 +38,10 @@ function showSellDetails(sell){
 function showSellHeader(){
     $('#sell-header-div').show();
     $('#sell-detail-div').hide();
+}
+function itemEditSubmit(wBillNo){
+	$('#ubillNo').attr('value',wBillNo);
+	$('#formEditItem').submit();
 }
 /*
 	private int itemNo;

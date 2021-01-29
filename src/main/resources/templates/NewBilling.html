@@ -11,6 +11,14 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/theme.js}"></script>
     <script th:src="@{/js/newbilling.js}"></script>
+<script th:inline="javascript">
+$(document).ready(function (){
+	wsSellDetailsArray = [[${header.sellDetails}]];
+	if(wsSellDetailsArray.length >0){
+		populateSellDetails();
+	}
+})
+</script>
 </head>
 <body>
 <div class="wrapper">
@@ -95,7 +103,7 @@
 				<th>Description</th>
 				<th>Unit Price</th>
 				<th>Qty</th>
-				<th>Total Price</th>
+				<th>Total Price</th><th></th>
 				</tr>
 			</table>
 			</div>
@@ -107,7 +115,7 @@
 	<div class="row"> <!-- button for payment-->
 		<div class="col-md-11 m-3 text-center">
 			<button class="btn bg-success btn-lg text-white shadow" data-toggle="modal" data-target="#payment-modal">Payment</button>
-			<button class="btn btn-outline-secondary btn-lg shadow" onclick="resetNewBill()">Reset</button>
+			<button class="btn btn-outline-secondary btn-lg shadow" onclick="resetNewBill()" id="reset-details">Reset</button>
 		</div>
 	</div>
 	<form th:action="@{NewBilling}" th:object="${header}" method="POST" id="billing-form">
@@ -152,7 +160,7 @@
 					<div class="col-6" id="pay-by-card-amt"></div>
 				</div>
 				<h5>Payment Reference Number:</h5>
-				<input type="number" class="form-control" id="payment-reference" value="0" autofocus>
+				<input type="number" class="form-control" id="payment-reference" value="0">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="billSubmit()">Complete</button>
