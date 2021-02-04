@@ -15,6 +15,7 @@
 $(document).ready(function (){
     $('#sell-detail-div').hide();
     wsSellList = [[${sellList}]];
+    enableSearchByBill();
 })
 
 </script>
@@ -36,20 +37,27 @@ $(document).ready(function (){
 <div class="row mb-2"> 
 	<div class="col p-2 bg-white shadow">
 		<form action="SearchInvoice" method="GET" th:object="${modelDTO}" onsubmit="validateSearch()">
-		<div class="row">		
-		<div class="col-sm-4 col-md-4 myform">
+		<div class="form-row">		
+		<div class="col-sm-4 col-md-3 myform">
 			<label class="form-label">Start Date: </label>
-			<input type="date" class="form-control" th:field="*{startDate}" id="sstartDate">
+			<input type="date" class="form-control" th:field="*{startDate}" id="srchStartDate">
 		</div>
-		<div class="col-sm-4 col-md-4 myform">
+		<div class="col-sm-4 col-md-3 myform">
 			<label class="form-label">End Date: </label>
-			<input type="date" class="form-control" th:field="*{endDate}" id="sendDate">
+			<input type="date" class="form-control" th:field="*{endDate}" id="srchEndDate">
 		</div>
-		<div class="col-sm-4 col-md-4 myform">
+		<div class="col-sm-4 col-md-3 myform">
 			<label class="form-label">Bill#: </label>
-			<input type="number" class="form-control" th:field="*{billNo}" id="sbillNo">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<input type="checkbox" id="srchBillCheckbox" th:field="*{billNoCheck}" onchange="enableSearchByBill()"> 
+				  	</div>
+				</div>
+				<input type="number" class="form-control" value="0" id="srchBillNo" th:field="*{billNo}" disabled>
+			</div>
 		</div>
-		<div class="col-md-2 offset-md-10 mt-2">
+		<div class="col-sm-12 col-md-3 d-flex align-items-end mt-2">
 			<button class="btn btn-primary btn-block" type="submit">Search</button>
 		</div>
 		</div>

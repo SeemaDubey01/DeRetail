@@ -6,6 +6,7 @@ public class SearchInvoiceDTO {
 	private Date startDate;
 	private Date endDate;
 	private int billNo;
+	private boolean billNoCheck;
 	
 	public Date getStartDate() {
 		return startDate;
@@ -24,6 +25,12 @@ public class SearchInvoiceDTO {
 	}
 	public void setBillNo(int billNo) {
 		this.billNo = billNo;
+	}
+	public boolean isBillNoCheck() {
+		return billNoCheck;
+	}
+	public void setBillNoCheck(boolean billNoCheck) {
+		this.billNoCheck = billNoCheck;
 	}
 	
 

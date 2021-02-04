@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DeRetail - Print Receipt</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/printreceipt.js}"></script> 
+</head>
+<body>
+<div class="wrapper">
+	<!-- sidebar -->
+	<div th:replace="template :: sidebar"></div>
+<!-- content -->
+<div class="container-fluid contentbar">
+	<!-- content top bar-->
+	<div th:replace="template :: topnav"></div>
+	<!-- content body -->
+<div class="container-fluid">
+<!-----------------------  start content from here ------------------------>
+<div class="row">
+    <div class="col-md-12 bg-white shadow mb-3">
+       <div class="container bg-white my-4" id="print-div">
+		    <div class="h4 text-center mt-4 text-success">Demo Super Mart</div>
+		    <div class="text-center">Station Road, Raigarh</div>
+		    <div class="text-center">Ph: +91 981234567</div>
+		    <div class="h5 text-center mt-3 text-success"><u>Tax Invoice</u></div>
+		    <hr>
+		    <div class="row">
+		        <div class="col-6">
+		            <div class="col">Bill No: <span th:text="${header.billNo}"></div>
+		            <div class="col">Cashier: <span th:text="${header.seller}"></div>
+		        </div>
+		        <div class="col-6 text-right">
+		        	<span id="iDate" class="collapse" th:text="${header.dateSold}"></span>
+		            <div class="col">Date: <span id="dDate"></span></div>
+		            <div class="col">Time: <span id="dTime"></span></div>
+		        </div>
+		    </div>
+		    <hr>
+		    <div class="table-responsive">
+		        <table class="table">
+		            <tr class="table-light">
+		                <th>#</th>
+		                <th>Description</th>
+		                <th>Unit Price</th>
+		                <th>Qty</th>
+		                <th>Total Price</th>
+		            </tr>
+		            <tr th:each="sell: ${header.sellDetails}">
+	                    <td th:text="${sell.itemNo}">1</td>
+	                    <td th:text="${sell.productDescr}">test bill</td>
+	                    <td th:text="${sell.unitPrice}">11.11</td>
+	                    <td th:text="${sell.quantity}">2</td>
+	                    <td th:text="${sell.totalPrice}">22.22</td>
+                	</tr>
+		        </table>
+		    </div>
+		    <hr>
+		    <div class="col-12">
+		        <div class="col">Total items: <span th:text="${header.totalItem}"></span>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="col-4 text-right">
+		            <div class="h4">Total: </div>
+		        </div>
+		        <div class="col-7 text-right">
+		            <h4>Rs. <span th:text="${header.totalBill}" id="nTotalBill">1,180.00</span></h4>
+		        </div>
+		    </div>
+		    <div class="col-12 text-right">
+		        (<span id="tTotalBill">One thousand one hunderd eighty</span> only)
+		    </div>
+		    <hr>
+		    <div class="row pl-2">
+		        <div class="col-12">Tax breakup:</div>
+		        <div class="col-6">Total price excl GST:</div>
+		        <div class="col-5 text-right">Rs. <span th:text="${header.totalBill}">1,180.00</span></div>
+		        <div class="col-6">GST 18% (NA):</div>
+		        <div class="col-5 text-right">Rs. 0.00</div>
+		        <div class="col-6">Total price incl GST:</div>
+		        <div class="col-5 text-right">Rs. <span th:text="${header.totalBill}">1,180.00</span></div>
+		    </div>
+		    <hr>
+		    <div class="col-12">Payment by: Card</div>
+		    <div class="col-12">Payment Reference: DRTY432TE</div>
+		    <hr>
+		</div>
+        <div class="text-center mb-2">
+            <button class="btn btn-primary" onclick="printReceipt()">Print</button>
+            <a href="UserHome.html" class="btn btn-secondary">Close</a>
+        </div>
+    </div>
+</div>
+
+<!----------------------- end body here ----------------------------->
+</div> 
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
+</body>
+</html>

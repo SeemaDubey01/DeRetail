@@ -15,6 +15,7 @@ import com.deretail.dto.SellDetails;
 import com.deretail.dto.SellHeader;
 import com.deretail.repo.SellDetailsRepo;
 import com.deretail.repo.SellHeaderRepo;
+import com.deretail.service.BillingService;
 
 @Controller
 @RequestMapping("/Billing")
@@ -23,7 +24,7 @@ public class BillingController {
 	@Autowired
 	SellHeaderRepo sellHeaderRepo;
 	@Autowired
-	SellDetailsRepo sellDetailsRepo;
+	BillingService billingService;
 	
 	@GetMapping("/NewBilling")
 	public String newBilling(Model model, SearchInvoiceDTO modelDTO) {
@@ -74,58 +75,44 @@ public class BillingController {
 		header.setTotalBill(amt);
 		System.out.println("new header :" + header);
 		sellHeaderRepo.save(header);
-		return "redirect:../UserHome";
+		model.addAttribute("header", header );
+		return "PrintReceipt";
 	}
 	
+	@GetMapping("/PrintReceipt")
+	public String printReceipt(Model model, SellHeader header) {
+		header = sellHeaderRepo.getOne(1);
+		model.addAttribute("header", header );
+		return "PrintReceipt";
+	}
+
 	@GetMapping("/SearchInvoice")
 	public String searchInvoice(Model model, SearchInvoiceDTO modelDTO) {
 		List<SellHeader> sellList = new ArrayList<SellHeader>();
-		System.out.println("modelDTO: " + modelDTO.getBillNo() + " " + modelDTO.getStartDate());
-		if (modelDTO.getBillNo() > 0 ) {
-			Optional<SellHeader> sellHeaderMap;
-			sellHeaderMap = sellHeaderRepo.findById(modelDTO.getBillNo());
-			if(sellHeaderMap.isPresent()) {
-				sellList.add(sellHeaderMap.get());
-			}
+		//System.out.println("modelDTO: " + modelDTO.getBillNo() + " " + modelDTO.getStartDate() + " " + modelDTO.isBillNoCheck());
+		
+		if (modelDTO.isBillNoCheck() && modelDTO.getBillNo() > 0 ) {  //billNo given then search for exact billNo
+			sellList.add(billingService.findByBillNo(modelDTO.getBillNo()));
+			Date sDate = new Date(sellList.get(0).getDateSold().getTime());
+			System.out.println("dateSold: " + sellList.get(0).getDateSold());
+			modelDTO.setStartDate(sDate);
+			modelDTO.setEndDate(sDate);
 		}
 		else {
-			sellList = sellHeaderRepo.findAll();
+			if (modelDTO.getStartDate() == null) { // first call of SearchInvoice
+				sellList = billingService.getTodaysBills();
+				Date today = new Date(System.currentTimeMillis());
+				modelDTO.setStartDate(today);
+				modelDTO.setEndDate(today);
+			}
+			else { // search based on date range
+				sellList = billingService.getBillsWithinDates(modelDTO.getStartDate(), modelDTO.getEndDate());		
+			}	
 		}
+		
 		model.addAttribute("sellList", sellList);
 		model.addAttribute("modelDTO", modelDTO);
 		return "SearchInvoice";
 	}
 	
-	@GetMapping("/FeedInvoice")
-	public String feedInvoice() {
-		SellHeader sellHeader = new SellHeader();
-		sellHeader.setBillNo(2);
-		sellHeader.setSeller("Raju");
-		sellHeader.setTotalBill(100);
-		sellHeader.setTotalItem(2);
-		System.out.println("header: " + sellHeader);
-		int i;
-		SellDetails sellDetails;
-		for (i=1;i<3;i++) {
-			sellDetails = new SellDetails();
-			sellDetails.setBillItem(20000+i);
-			sellDetails.setItemNo(i);
-			sellDetails.setProductCode(111111+i);
-			sellDetails.setQuantity(1);
-			sellDetails.setTotalPrice(50*i);
-			sellDetails.setUnitPrice(50*i);
-			sellDetails.setBillNo(2);
-			
-			sellHeader.getSellDetails().add(sellDetails);
-			System.out.println("detail : " + sellDetails);
-		}
-		sellHeaderRepo.save(sellHeader);
-		return "SearchInvoice";
-	}
-	
-	@GetMapping("/ClearInvoice")
-	public String clearInvoice() {
-		sellHeaderRepo.deleteById(2);
-		return "SearchInvoice";
-	}
 }

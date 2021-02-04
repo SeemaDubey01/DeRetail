@@ -3,18 +3,18 @@
  */
 var wsSellList;
 function validateSearch(){
-    if($('#sbillNo').val() == ''){
-         $('#sbillNo').val(0);
+    if($('#srchBillNo').val() == ''){
+         $('#srchBillNo').val(0);
     }      
     
     var now = new Date();
  	var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2) ;
 
-    if($('#sstartDate').val() == ''){
-         $('#sstartDate').val(today);
+    if($('#srchStartDate').val() == ''){
+         $('#srchStartDate').val(today);
     }  
-    if($('#sendDate').val() == ''){
-         $('#sendDate').val(today);
+    if($('#srchEndDate').val() == ''){
+         $('#srchEndDate').val(today);
     }  
 }
 function showSellDetails(sell){
@@ -43,6 +43,25 @@ function itemEditSubmit(wBillNo){
 	$('#ubillNo').attr('value',wBillNo);
 	$('#formEditItem').submit();
 }
+function enableSearchByBill(){
+    if ($('#srchBillCheckbox').prop('checked')){
+    	console.log("checked");
+        var now = new Date();
+        var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2) ;
+       // $('#srchStartDate').val(today);
+        //$('#srchEndDate').val(today);
+        $('#srchStartDate').prop("disabled", true);
+        $('#srchEndDate').prop("disabled", true);
+        $('#srchBillNo').prop("disabled", false);
+    }
+    else {
+        $('#srchStartDate').prop("disabled", false);
+        $('#srchEndDate').prop("disabled", false);
+        $('#srchBillNo').val(0);
+        $('#srchBillNo').prop("disabled", true);
+    }
+}
+
 /*
 	private int itemNo;
 	private int productCode;
