@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DeRetail - Add Product</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+	<script th:src="@{/js/addproduct.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+	<!-- sidebar -->
+	<div th:replace="template :: sidebar"></div>
+<!-- content -->
+<div class="container-fluid contentbar">
+	<!-- content top bar-->
+	<div th:replace="template :: topnav"></div>
+	<!-- content body -->
+<div class="container-fluid">
+<!-----------------------  start content from here ------------------------>
+<div class="row ">
+<div class="col-12 bg-white shadow mb-2">
+    <div class="h5 text-success">Add Product</div>
+    <form class="myform row" onsubmit="return addProduct()">
+        <div class="col-md-4">
+            <label class="form-label">Product Code*</label>
+            <input type="number" class="form-control" id="productCode" required>
+        </div>
+        <div class="col-md-8">
+            <label class="form-label">Brand*</label>
+            <input type="text" class="form-control" id="brand" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">SKU</label>
+            <input type="text" class="form-control" id="sku" placeholder="100g BIB, 350g TIN">
+        </div>
+        <div class="col-md-8">
+            <label class="form-label">Product Name*</label>
+            <input type="text" class="form-control" id="productName" required>
+        </div>
+        <div class="col-md-12 mb-2">
+            <label class="form-label">Product Description</label>
+            <input type="text" class="form-control" id="productDescr">
+        </div>
+        <div class="col-md-12">
+            <input type="file" class="custom-file-input">
+            <label class="custom-file-label mx-3">Photo (upload not working at the moment)</label>
+        </div>
+        <div class="col-md-12 text-center my-2">
+            <button class="btn btn-primary" >Add</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- add product list  -->
+<div class="row mb-2" id="productList-div">
+    <div class="col bg-white shadow p-0">
+        <div class="table-responsive">
+            <table class="table table-hover" id="product-table">
+                <tr class="table-light">
+                    <th>Product Code</th>
+                    <th>Brand</th>
+                    <th>SKU</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row"> <!-- button for payment-->
+    <div class="col-md-12 my-2 text-center">
+    	<form class="myform" id="productListForm" th:action="@{AddProduct}" method="POST" onsubmit="return validateProductList()">
+        <button class="btn bg-success text-white shadow" >Add Product List</button>
+        <button class="btn btn-outline-secondary shadow" onclick="resetProductList()">Clear List</button>
+        </form>
+    </div>
+</div>
+    
+<!----------------------- end body here ----------------------------->
+</div> 
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
+</body>
+</html>

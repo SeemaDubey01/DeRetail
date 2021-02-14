@@ -4,16 +4,17 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.deretail.dto.SearchInvoiceDTO;
 import com.deretail.dto.SellDetails;
 import com.deretail.dto.SellHeader;
-import com.deretail.repo.SellDetailsRepo;
 import com.deretail.repo.SellHeaderRepo;
 import com.deretail.service.BillingService;
 
@@ -80,8 +81,14 @@ public class BillingController {
 	}
 	
 	@GetMapping("/PrintReceipt")
-	public String printReceipt(Model model, SellHeader header) {
-		header = sellHeaderRepo.getOne(1);
+	public String printReceipt(Model model, SearchInvoiceDTO modelDTO) {
+		SellHeader header;
+		if (modelDTO.getBillNo() > 0 ) {
+			header = billingService.findByBillNo(modelDTO.getBillNo());
+		}
+		else {
+			header = sellHeaderRepo.getOne(1);
+		}
 		model.addAttribute("header", header );
 		return "PrintReceipt";
 	}

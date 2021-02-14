@@ -24,18 +24,18 @@ $(document).ready(function (){
 <div class="wrapper">
 	<!-- sidebar -->
 	<div th:replace="template :: sidebar"></div>
-<!-- content -->
+<!-- content area -->
 <div class="container-fluid contentbar">
 	<!-- content top bar-->
 	<div th:replace="template :: topnav"></div>
 	<!-- content body -->
 <div class="container-fluid">
-<!--  start content from here -->
-
+<!-----------------------  start content from here ------------------>
 
 <!-- search options -->
 <div class="row mb-2"> 
 	<div class="col p-2 bg-white shadow">
+		<div class="col-12 text-success h5">Search Invoice</div>
 		<form action="SearchInvoice" method="GET" th:object="${modelDTO}" onsubmit="validateSearch()">
 		<div class="form-row">		
 		<div class="col-sm-4 col-md-3 myform">
@@ -148,14 +148,15 @@ $(document).ready(function (){
 		<form action="NewBilling" method="GET" th:object="${modelDTO}" id="formEditItem">
 			<input type="hidden" th:field="*{billNo}" id="ubillNo">
 			<button class="btn btn-danger" type="submit">Update</button>
+			<button class="btn btn-primary" type="button" onclick="printInvoice()">Print</button>
 			<button class="btn btn-secondary" type="button" onclick="showSellHeader()">Close</button>
 		</form>
 	</div>
 </div>
 </div>
 
-</div> <!-- end you content here -------->
-		
+<!-----------------------  end content here ----------------------------->
+</div> 
 </div> <!-- end of content area-->
 </div> <!-- end of wrapper -->
 </body>

@@ -45,11 +45,8 @@ function itemEditSubmit(wBillNo){
 }
 function enableSearchByBill(){
     if ($('#srchBillCheckbox').prop('checked')){
-    	console.log("checked");
-        var now = new Date();
-        var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2) ;
-       // $('#srchStartDate').val(today);
-        //$('#srchEndDate').val(today);
+        //var now = new Date();
+        //var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2) ;
         $('#srchStartDate').prop("disabled", true);
         $('#srchEndDate').prop("disabled", true);
         $('#srchBillNo').prop("disabled", false);
@@ -62,11 +59,8 @@ function enableSearchByBill(){
     }
 }
 
-/*
-	private int itemNo;
-	private int productCode;
-	private String productDescr;
-	private int quantity;
-	private double unitPrice;
-	private double totalPrice;
-*/
+function printInvoice(){
+	$('#formEditItem').attr('action',"PrintReceipt");
+	$('#formEditItem').submit();
+}
+

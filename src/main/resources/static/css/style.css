@@ -3,6 +3,7 @@
 .navbar-brand {
     font-size: 2rem;
 }
+#brand-icon { transform: rotate(-15deg);}
 .header-hr{
     border-bottom: 1px solid rgba(255,255,255,0.5);
 }
@@ -14,7 +15,7 @@
 .sidebar > .fixed-top {right: auto;}
 .sidebar.toggled {display: none;}
 @media (max-width:767px){
-    .sidebar {width: 90px;}
+    .sidebar {width: 6rem;}
     #sidebar-brand {display: none;}
     .fixed-bottom {font-size: 0.8rem;}
 }
@@ -32,8 +33,8 @@
 .top-nav .fa-bell {font-size: 25px; line-height: 40px;}
 .top-nav{left: 13rem;}
 @media (max-width:767px){
-    .top-nav {left: 90px;}
-    .top-nav.toggled{left: 0px;}
+    .top-nav {left: 6rem;}
+    .top-nav.toggled{left: 0rem;}
 }
 .top-nav.fixed-top.halfToggled {left: 6rem;}
 .img-user {width: 40px;}
@@ -54,7 +55,6 @@
 }
 .sidebar-fixed-nav {
     top: 6rem;
-    margin-left: 10px;
 }
 .sidebar-fixed-nav i {
     width: 20px;
@@ -91,9 +91,15 @@
 .border-left-secondary{
     border-left: 4px solid #6c757d;
 }
+.sidebar-dropdown {
+    background-color: #1a6c19;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.sidebar-dropdown .dropdown-item {color:rgba(255,255,255,0.5)}
+.sidebar-dropdown .dropdown-item:hover {color:rgba(255,255,255,0.75); background-color: transparent;}
 .sidebarHalfToggler{
-    position:fixed;
-    top:400px; left: 4rem;
+    position:relative;
+    top:100px; left: 4rem;
     border-radius: 50%;
     background-color: hsla(0,0%,100%,.25);
     color: white;
@@ -101,7 +107,7 @@
     text-align: center;
     cursor: pointer;
 }
-.sidebarHalfToggler.toggled {top: 600px; left:1.5rem;}
+.sidebarHalfToggler.toggled {left:0.7rem;}
 
 .sidebarHalfToggler.toggled:after{font-weight:900;content:"\f105";
     font-family:Font Awesome\ 5 Free;}
@@ -112,3 +118,4 @@
 .myform label {margin-bottom:0;padding-left: 5px;}
 .m-width-td-1 {max-width:1rem;}
 .m-width-td-4 {max-width:5rem;}
+.myform label {margin-bottom:0; margin-top:10px; padding-left: 5px;}

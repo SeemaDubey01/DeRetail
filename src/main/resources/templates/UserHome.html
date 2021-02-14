@@ -15,12 +15,43 @@
 <body>
 <div class="wrapper">
 	<!-- sidebar -->
-<div th:replace="template :: sidebar"></div>
+	<div th:replace="template :: sidebar"></div>
+<!-- content area -->
 <div class="container-fluid contentbar">
+	<!-- content top bar-->
 	<div th:replace="template :: topnav"></div>
-<!-- content body -->
-	<div style="height:90vh"></div>
+	<!-- content body -->
+<div class="container-fluid">
+<!-----------------------  start content from here ------------------>
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4 py-2">
+        <a class="card shadow border-left-primary" href="#">
+            <div class="card-body">
+                total sell for today
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-4 py-2">
+        <a class="card shadow border-left-success" href="#">
+            <div class="card-body">
+                total purchase for today
+            </div>
+        </a>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-4 py-2">
+        <a class="card shadow border-left-secondary" href="#">
+            <div class="card-body">
+                Invoice details
+            </div>
+        </a>
+    </div>
+
 </div>
-</div>
+<!-----------------------  end content here ----------------------------->
+</div> 
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
 </body>
 </html>

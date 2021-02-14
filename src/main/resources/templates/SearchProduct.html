@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DeRetail - Search Product</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/searchproduct.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+	<!-- sidebar -->
+	<div th:replace="template :: sidebar"></div>
+<!-- content -->
+<div class="container-fluid contentbar">
+	<!-- content top bar-->
+	<div th:replace="template :: topnav"></div>
+	<!-- content body -->
+<div class="container-fluid">
+<!-----------------------  start content from here ------------------------>
+<div class="row">
+<div class="col-12 bg-white shadow m-1">
+    <div class="h5 text-success">Search Product</div>
+    <form class="myform row" th:object="${searchDTO}">
+        <div class="col-md-4">
+            <label class="form-label">Product Code</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="radio" th:field="*{dtoSearchOption}" onclick="checkSearchOption()"  id="searchCodeRadio" value="Code" >
+                    </div>
+                </div>
+                <input type="number" class="form-control" id="searchCode" th:field="*{dtoProductCode}">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <label class="form-label">Brand</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="radio" th:field="*{dtoSearchOption}" onclick="checkSearchOption()" id="searchBrandRadio" value="Brand">
+                    </div>
+                </div>
+                <input type="text" class="form-control" id="searchBrand" th:field="*{dtoBrand}" disabled>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">Product Name</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="radio" th:field="*{dtoSearchOption}" onclick="checkSearchOption()" id="searchNameRadio" value="Name">
+                    </div>
+                </div>
+                <input type="text" class="form-control" id="searchName" th:field="*{dtoProductName}" disabled>
+            </div>
+        </div>
+        <div class="col-md-12 text-center my-2">
+            <button class="btn btn-primary">Search</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- search result -->
+<div class="row" id="productList-div">
+    <div class="col-12 bg-white shadow m-1 p-0">
+        <div class="table-responsive">
+            <table class="table table-hover" id="list-table">
+                <tr class="table-light">
+                    <th>Product Code</th>
+                    <th>Brand</th>
+                    <th>SKU</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+                <tr th:if="${#arrays.length(productList.productArray) <= 0}"><td colspan="7" class="text-center text-danger">No records found!</td></tr>
+                <tr th:each="product, item:${productList.productArray}">
+                    <td th:text="${product.barcode}" th:id="'list-productCode-'+${item.index}">1234567890123</td>
+                    <td th:text="${product.brand}" th:id="'list-brand-'+${item.index}">Haldiram</td>
+                    <td th:text="${product.sku}" th:id="'list-sku-'+${item.index}">200g</td>
+                    <td th:text="${product.prodName}" th:id="'list-productName-'+${item.index}">Cornflex Mixture</td>
+                    <td th:text="${product.category}" th:id="'list-productDescr-'+${item.index}">Salted mixture with cornflex</td>
+                    <td>
+                        <img class="img-thumbnail" width="40px" th:src="@{/images/product-image.jpg}" data-toggle="tooltip" title="product-image.jpg">
+                    </td>
+                    <td class="text-center">
+                        <span class="btn fas fa-info text-info" data-toggle="tooltip" title="Details" th:onclick="'showProductDisplay('+${item.index}+')'">
+                        </span>
+                        <span class="btn fas fa-edit text-danger" data-toggle="tooltip" title="Update" th:onclick="'showProductUpdate('+${item.index}+')'">	
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- update product details -->
+<div class="row" id="productUpdate-div" style="display:none;">
+    <div class="col-12 bg-white shadow m-1">
+        <div class="col-12 text-right">
+            <button class="btn close" onclick="showProductList()">&times;</button>
+        </div>
+        <div class="h5 text-success">Update Product Details</div>
+        <form class="myform row">
+        <div class="col-sm-8">
+            <div class="row">
+            <div class="col-sm-5">
+                <label class="form-label h6">Product Code</label><br/>
+                <label class="form-label h6 text-primary" id="update-productCode">1234567890123</label>
+            </div>
+            <div class="col-sm-7">
+                <label class="form-label h6">Brand</label>
+                <input type="text" class="form-control" id="update-brand" required>
+            </div>
+            <div class="col-sm-5">
+                <label class="form-label h6">SKU</label>
+                <input type="text" class="form-control" id="update-sku">
+            </div>
+            <div class="col-sm-7">
+                <label class="form-label h6">Product Name</label>
+                <input type="text" class="form-control" id="update-productName" required>
+            </div>
+            <div class="col-sm-12">
+                <label class="form-label h6">Product Description</label>
+                <input type="text" class="form-control" id="update-productDescr">
+            </div>
+            <label class="form-label h6 ml-3">Image</label>
+            <div class="col-md-12">
+                
+                <input type="file" class="custom-file-input">
+                <label class="custom-file-label mx-3">Photo (upload not working at the moment)</label>
+            </div>
+            
+            </div>
+        </div>
+        <div class="col-sm-4 my-2">
+            <img th:src="@{/images/product-image.jpg}" class="w-100" >
+        </div>
+        <div class="col-md-12 text-center my-2">
+            <button class="btn btn-primary">Update</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="showProductList()">Close</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+<!-- List details -->
+<div class="row mb-2" id="productDisplay-div" style="display:none;">
+    <div class="col-12 bg-white shadow m-1">
+        <div class="col-12 text-right">
+            <button class="btn close" onclick="showProductList()">&times;</button>
+        </div>
+        <div class="h5 text-success">Product Details</div>
+            <div class="row">
+            <div class="col-sm-8">
+                <div class="row">
+                <div class="col-sm-5">
+                    <label class="form-label h6">Product Code</label><br />
+                    <label class="form-label h6 text-primary" id="display-productCode">1234567890123</label>
+                </div>
+                <div class="col-sm-7">
+                    <label class="form-label h6">Brand</label><br />
+                    <label class="form-label" id="display-brand">Haldiram</label>
+                </div>
+                <div class="col-sm-5">
+                    <label class="form-label h6">SKU</label><br />
+                    <label class="form-label" id="display-sku">200g</label>
+                </div>
+                <div class="col-sm-7">
+                    <label class="form-label h6">Product Name</label><br />
+                    <label class="form-label" id="display-productName">Cornflex Mixture</label>
+                </div>
+                <div class="col-sm-12">
+                    <label class="form-label h6">Product Description</label><br />
+                    <label class="form-label" id="display-productDescr">Salted mixture with cornflex</label>
+                </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="bg-image hover-zoom">
+                    <img th:src="@{/images/product-image.jpg}" class="w-100" >
+                </div>
+            </div>
+            </div>
+            <div class="col-md-12 text-center my-2">
+                <button class="btn btn-secondary" type="button" onclick="showProductList()">Close</button>
+            </div>
+    </div>
+</div>
+<!----------------------- end body here ----------------------------->
+</div> 
+</div> <!-- end of content area-->
+</div> <!-- end of wrapper -->
+</body>
+</html>
